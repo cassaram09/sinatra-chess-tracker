@@ -16,7 +16,7 @@ class GamesController < ApplicationController
   get '/users/:slug/games/new' do
     @user = User.find_by_slug(params[:slug])
     @current = Helpers.current_user(session)
-    if @current.id = @user.id
+    if @current.id == @user.id
       erb :'/users/games/new'
     else
       redirect "/users/#{@current.slug}"
@@ -24,10 +24,11 @@ class GamesController < ApplicationController
   end
 
   post '/users/:slug/games' do
+    binding.pry
     @user = User.find_by_slug(params[:slug])
     @current = Helpers.current_user(session)
     if @current.id = @user.id
-      @game = Game.find_by(id: params[:id])
+      @game = Game.create(date: params[:date])
       erb :'/users/games/show'
     else
       redirect "/users/#{@current.slug}"

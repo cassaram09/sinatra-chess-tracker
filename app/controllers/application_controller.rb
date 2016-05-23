@@ -10,6 +10,7 @@ class ApplicationController < Sinatra::Base
     set :session_secret, "powerlifting4days"
   end
 
+  #Get the home page
   get '/' do
     @user = Helpers.current_user(session)
     if Helpers.is_logged_in?(session) 
@@ -19,12 +20,19 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  #Get the login page
   get '/login' do
-    erb :login
+    @user = Helpers.current_user(session)
+    if Helpers.is_logged_in?(session) 
+      redirect "/users/#{@user.slug}"
+    else 
+      erb :login
+    end
   end
 
+  #Send login credentials to database
   post '/login' do
-    if !params.has_value?("")
+    if !params.has_value?("") #if any field is blank, throw an error and reload the page
       @user = User.find_by(email: params[:email])
       if @user && @user.authenticate(params[:password])
         session[:id] = @user.id
@@ -41,6 +49,7 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  #Get the sign up page
   get '/register' do
     @user = Helpers.current_user(session)
     if Helpers.is_logged_in?(session) 
@@ -50,8 +59,9 @@ class ApplicationController < Sinatra::Base
     end 
   end
 
+  #Send signup credentials to database
   post '/register' do
-    if !params.has_value?("")
+    if !params.has_value?("")  #if any field is blank, throw an error and reload the page
       if User.find_by(email: params[:email])
         flash[:message] = "That email is already associated with another account."
         redirect '/register'
@@ -72,11 +82,13 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  #Log the user out of the application
   get '/logout' do
     session.clear
     redirect '/'
   end
 
+  #redirect the user if they try to access this page
   get '/users' do
     @user = Helpers.current_user(session)
     if Helpers.is_logged_in?(session) 
@@ -86,6 +98,7 @@ class ApplicationController < Sinatra::Base
     end 
   end
 
+  #Render the user's dashboard if they're loggedin, otherwise redirect 
   get '/users/:slug' do
     @user = Helpers.current_user(session)
     if Helpers.is_logged_in?(session) 
