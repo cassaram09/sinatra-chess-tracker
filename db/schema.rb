@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20160523180020) do
 
   create_table "draws", force: :cascade do |t|
     t.integer "game_id"
-    t.integer "user_id"
   end
 
   create_table "draws_users", force: :cascade do |t|

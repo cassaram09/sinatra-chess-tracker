@@ -12,5 +12,5 @@
 </br>
 <h2> You Recent Games </h2>
 <% @user.games.reverse.each do |game| %>
-  <a href="<%= @user.slug %>/games/<%= game.id %>"><%= game.date %></a>
+  <a href="<%= @user.slug %>/games/<%= game.id %>"><%= game.date %> <%= game.draw %> </a>
 <% end %>
