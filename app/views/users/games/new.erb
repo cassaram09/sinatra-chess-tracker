@@ -6,34 +6,45 @@
     <br/>
     <br/>
   <p>
-
   <input type="checkbox" id="toggle" name="draw" value="draw"/><label for="toggle">Draw?</label>
-<div id="block">
-  <label>Winner?:</label> 
+  </p>
+
+  <div class="draw">
+  <label>Player:</label> 
     <select name="players[][id]">
       <option disabled selected value> -- select Player -- </option>
       <% User.all.each do |user| %>
         <option value="<%= user.id %>"> <%= user.name %></option>
       <% end %>
     </select>
-    <label>Win?</label><input type="checkbox" value="win" name="player1[][win]">
-    <label>Loss?</label><input type="checkbox" value="loss" name="player1[][loss]">
-  </p>
-  <p>
-  <label>Player 2:</label> 
+    <label>Player:</label> 
     <select name="players[][id]">
       <option disabled selected value> -- select Player -- </option>
       <% User.all.each do |user| %>
         <option value="<%= user.id %>"> <%= user.name %></option>
       <% end %>
     </select>
-    <label>Win?</label><input type="checkbox" value="win" name="player2[][win]">
-    <label>Loss?</label><input type="checkbox" value="loss" name="player2[][loss]">
-  </p>
-  <p>
-  <label>Draw?</label> 
-    <input type="checkbox" value="draw" name="draw">
-  </p>
-</div>
+  </div>
+
+  <div class="win-lose">
+  <label>Winner:</label> 
+    <select name="winner[id]">
+      <option disabled selected value> -- select Player -- </option>
+      <% User.all.each do |user| %>
+        <option value="<%= user.id %>"> <%= user.name %></option>
+      <% end %>
+    </select>
+    <br/>
+    <br/>
+    <label>Loser:</label> 
+    <select name="loser[id]">
+      <option disabled selected value> -- select Player -- </option>
+      <% User.all.each do |user| %>
+        <option value="<%= user.id %>"> <%= user.name %></option>
+      <% end %>
+    </select>
+  
+  </div>
+    <br/>
     <input type="submit" value="Create" id="create">
 </form>

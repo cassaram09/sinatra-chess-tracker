@@ -25,16 +25,18 @@ class GamesController < ApplicationController
 
   post '/users/:slug/games' do
     binding.pry
-    @user = User.find_by_slug(params[:slug])
     @current = Helpers.current_user(session)
-    if @current.id = @user.id
       @game = Game.create(date: params[:date])
-      #if params[:date]
-        #@draw = Draw.create(game_i)
-      erb :'/users/games/show'
-    else
+      if params[:draw]
+        @draw = Draw.create(game_id: @game.id)
+        params[:players].each do |player|
+          @draw.users << User.find_by(id: player[:id]) 
+        end
+        @draw.save
+        redirect "/users/#{@current.slug}/games/#{@game.id}"
+      else
       redirect "/users/#{@current.slug}"
-    end
+      end
   end
 
   get '/users/:slug/games/:id' do

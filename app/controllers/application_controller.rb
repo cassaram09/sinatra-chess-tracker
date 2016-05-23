@@ -12,8 +12,8 @@ class ApplicationController < Sinatra::Base
 
   #Get the home page
   get '/' do
-    @user = Helpers.current_user(session)
     if Helpers.is_logged_in?(session) 
+      @user = Helpers.current_user(session)
       redirect "/users/#{@user.slug}"
     else 
       erb :index
@@ -32,11 +32,11 @@ class ApplicationController < Sinatra::Base
 
   #Send login credentials to database
   post '/login' do
+    binding.pry
     if !params.has_value?("") #if any field is blank, throw an error and reload the page
       @user = User.find_by(email: params[:email])
       if @user && @user.authenticate(params[:password])
         session[:id] = @user.id
-        @session = session
         flash[:message] = "Welcome, #{@user.name}!"
         redirect "/users/#{@user.slug}"
       else
@@ -51,8 +51,8 @@ class ApplicationController < Sinatra::Base
 
   #Get the sign up page
   get '/register' do
-    @user = Helpers.current_user(session)
     if Helpers.is_logged_in?(session) 
+      @user = Helpers.current_user(session)
       redirect "/users/#{@user.slug}"
     else 
       erb :register
@@ -90,8 +90,8 @@ class ApplicationController < Sinatra::Base
 
   #redirect the user if they try to access this page
   get '/users' do
-    @user = Helpers.current_user(session)
-    if Helpers.is_logged_in?(session) 
+    if Helpers.is_logged_in?(session)
+      @user = Helpers.current_user(session) 
       redirect "/users/#{@user.slug}"
     else 
       redirect '/'
@@ -101,14 +101,11 @@ class ApplicationController < Sinatra::Base
   #Render the user's dashboard if they're loggedin, otherwise redirect 
   get '/users/:slug' do
     @user = Helpers.current_user(session)
-    if Helpers.is_logged_in?(session) 
-      if @user.slug == params[:slug]
+    if Helpers.is_logged_in?(session) && @user.slug == params[:slug]
+        @user = Helpers.current_user(session)
         erb :'/users/show'
       else
-        redirect "/users/#{@user.slug}"
-      end
-    else 
-      redirect "/login"
+      redirect "/"
     end
   end
 

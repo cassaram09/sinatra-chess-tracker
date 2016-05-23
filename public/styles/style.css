@@ -1,3 +1,7 @@
-#block {
+.draw {
+  display: none;
+}
+
+.win-lose {
   display: block;
 }
