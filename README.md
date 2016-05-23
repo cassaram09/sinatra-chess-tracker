@@ -37,8 +37,8 @@ Loss
 Draw
   belongs_to Game
 
-matt = User.create(name: "Matt")
-kelvin = User.create(name: "Kelvin")
+matt = User.create(name: "Matt" password: "1234")
+kelvin = User.create(name: "Kelvin", password: "1234")
 game = Game.create(date: "5/23/16")
 
 win = Win.create(user_id: 1, game_id: 1)

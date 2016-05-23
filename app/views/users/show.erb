@@ -4,16 +4,13 @@
   <p><%= flash[:message] %></p>
 <% end %>
 
-<a href="<%= @user.slug %>/games">View games</a>
+<a href="<%= @user.slug %>/games">View all games</a>
 </br>
 </br>
-<a href="<%= @user.slug %>/games/new">Add a game/a>
+<a href="<%= @user.slug %>/games/new">Add a game</a>
 </br>
 </br>
-
-
-</br>
-</br>
-<% @user.games.each do |game| %>
+<h2> You Recent Games </h2>
+<% @user.games.reverse.each do |game| %>
   <a href="<%= @user.slug %>/games/<%= game.id %>"><%= game.date %></a>
 <% end %>
