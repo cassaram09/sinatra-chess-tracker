@@ -1,3 +1,3 @@
 $('#toggle').click(function(){
-    this.checked?$('#block').show(1000):$('#block').hide(1000);
+    this.checked?$('#block').hide(1000):$('#block').show(1000);
 });

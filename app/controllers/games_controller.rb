@@ -29,6 +29,8 @@ class GamesController < ApplicationController
     @current = Helpers.current_user(session)
     if @current.id = @user.id
       @game = Game.create(date: params[:date])
+      #if params[:date]
+        #@draw = Draw.create(game_i)
       erb :'/users/games/show'
     else
       redirect "/users/#{@current.slug}"

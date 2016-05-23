@@ -42,4 +42,5 @@ kelvin = User.create(name: "Kelvin", password: "1234")
 game = Game.create(date: "5/23/16")
 
 win = Win.create(user_id: 1, game_id: 1)
-loss = Loss.create(user_id: 2, game_id: 2)
+loss = Loss.create(user_id: 2, game_id: 1)
+draw = Draw.create(game_id: 1)
