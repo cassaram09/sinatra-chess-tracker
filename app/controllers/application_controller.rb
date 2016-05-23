@@ -11,16 +11,16 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    erb :index
+    @user = Helpers.current_user(session)
+    if Helpers.is_logged_in?(session) 
+      redirect "/users/#{@user.slug}"
+    else 
+      erb :index
+    end
   end
 
   get '/login' do
-    if Helpers.is_logged_in?(session)
-       @user = Helpers.current_user(session)
-      redirect "/users/#{@user.slug}"
-    else
-      erb :login
-    end
+    erb :login
   end
 
   post '/login' do
@@ -42,12 +42,12 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/register' do
-    if Helpers.is_logged_in?(session)
-      @user = Helpers.current_user(session)
+    @user = Helpers.current_user(session)
+    if Helpers.is_logged_in?(session) 
       redirect "/users/#{@user.slug}"
-    else
+    else 
       erb :register
-    end
+    end 
   end
 
   post '/register' do
@@ -78,20 +78,24 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/users' do
-    if Helpers.is_logged_in?(session)
-      @user = Helpers.current_user(session)
+    @user = Helpers.current_user(session)
+    if Helpers.is_logged_in?(session) 
       redirect "/users/#{@user.slug}"
-    else
-      redirect '/login'
-    end
+    else 
+      redirect '/'
+    end 
   end
 
   get '/users/:slug' do
-    if Helpers.is_logged_in?(session)
-      @user = Helpers.current_user(session)
-      erb :'/users/show'
-    else
-      redirect '/login'
+    @user = Helpers.current_user(session)
+    if Helpers.is_logged_in?(session) 
+      if @user.slug == params[:slug]
+        erb :'/users/show'
+      else
+        redirect "/users/#{@user.slug}"
+      end
+    else 
+      redirect "/login"
     end
   end
 
