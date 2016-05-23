@@ -25,15 +25,14 @@ class GamesController < ApplicationController
 
   post '/users/:slug/games' do
     binding.pry
-    @current = Helpers.current_user(session)
+    @user = Helpers.current_user(session)
       @game = Game.create(date: params[:date])
       if params[:draw]
-        @draw = Draw.create(game_id: @game.id)
-        params[:players].each do |player|
-          @draw.users << User.find_by(id: player[:id]) 
-        end
+        @draw = Outcome.create(name: "draw", game_id: @game.id)
+        @game.users << @user
+        @game.users << User.find_by(id: params[:players][0][:id]) 
         @draw.save
-        redirect "/users/#{@current.slug}/games/#{@game.id}"
+        redirect "/users/#{@user.slug}/games/#{@game.id}"
       else
       redirect "/users/#{@current.slug}"
       end

@@ -10,14 +10,7 @@
   </p>
 
   <div class="draw">
-  <label>Player:</label> 
-    <select name="players[][id]">
-      <option disabled selected value> -- select Player -- </option>
-      <% User.all.each do |user| %>
-        <option value="<%= user.id %>"> <%= user.name %></option>
-      <% end %>
-    </select>
-    <label>Player:</label> 
+    <label>Against:</label> 
     <select name="players[][id]">
       <option disabled selected value> -- select Player -- </option>
       <% User.all.each do |user| %>

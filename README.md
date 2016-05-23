@@ -43,7 +43,7 @@ game = Game.create(date: "5/23/16")
 game2 = Game.create(date: "5/24/16")
 
 outcome1 = Outcome.create(name: "draw")
-outcome1 = Outcome.create(name: "win")
+outcome2 = Outcome.create(name: "win")
 
 win = Win.create(user_id: 1, game_id: 1)
 loss = Loss.create(user_id: 2, game_id: 1)
